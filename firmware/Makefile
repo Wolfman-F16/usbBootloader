@@ -11,6 +11,7 @@
 # This Revision: $Id: Makefile 147 2006-03-01 17:33:03Z cs $
 
 BOOTLOADER_ADDRESS = 1800
+speed = 16000000
 
 LDFLAGS += -Wl,--section-start=.text=$(BOOTLOADER_ADDRESS)
 
@@ -20,7 +21,7 @@ UISP = uisp -dprog=avr910 -dserial=$(SERIAL) -dpart=auto
 # to a Keyspan USB to serial converter to a Mac running Mac OS X.
 # Choose your favorite programmer and interface.
 
-COMPILE = avr-gcc -Wall -Os -Iusbdrv -I. -mmcu=atmega8 
+COMPILE = avr-gcc -Wall -Os -Iusbdrv -I. -mmcu=atmega8 -DF_CPU=$(speed) 
 #-DDEBUG_LEVEL=2
 # NEVER compile the final product with debugging! Any debug output will
 # distort timing so that the specs can't be met.
@@ -74,21 +75,21 @@ fuse_tiny2313:	# only needed for attiny2313
 
 
 clean:
-	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.bin *.o usbdrv/*.o main.s usbdrv/oddebug.s usbdrv/usbdrv.s
+	rm -f ../Release/main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.bin *.o usbdrv/*.o main.s usbdrv/oddebug.s usbdrv/usbdrv.s
 
 # file targets:
 main.bin:	$(OBJECTS)
-	$(COMPILE) -o main.bin $(OBJECTS) $(LDFLAGS)
+	$(COMPILE) -o ../Release/main.bin $(OBJECTS) $(LDFLAGS)
 
 main.hex:	main.bin
 	rm -f main.hex main.eep.hex
-	avr-objcopy -j .text -j .data -O ihex main.bin main.hex
-	./checksize main.bin
+	avr-objcopy -j .text -j .data -O ihex ../Release/main.bin ../Release/main.hex
+	./checksize ../Release/main.bin
 # do the checksize script as our last action to allow successful compilation
 # on Windows with WinAVR where the Unix commands will fail.
 
 disasm:	main.bin
-	avr-objdump -d main.bin
+	avr-objdump -d ../Release/main.bin
 
 cpp:
 	$(COMPILE) -E main.c
