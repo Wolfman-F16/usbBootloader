@@ -24,13 +24,15 @@
 #ifndef __bootloaderconfig_h_included__
 #define __bootloaderconfig_h_included__
 
+#include "usbconfig.h"
+
 #define BOOTLOADER_INIT \
     PORTB = 0xff;       \
     DDRB  = 0;          \
     PORTC = 0xff;       \
     DDRC  = 0;          \
-    PORTD = 0xfa;       \
-    DDRD  = 0x02;
+    PORTD = 0xfF;       \
+    DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);
 
 #define BOOTLOADER_CONDITION ((PINB & (1 << PB0)) == 0)
 

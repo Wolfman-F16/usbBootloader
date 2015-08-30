@@ -123,8 +123,19 @@ uchar usbFunctionWrite(uchar *data, uchar len)
 
 int main(void)
 {
+    uint8_t i=0;
+    uint8_t j=0;
+
     /* initialize hardware */
     BOOTLOADER_INIT;
+
+    while (--j) { /* USB Reset by device only required on Watchdog Reset */
+        i = 0;
+        while (--i)
+            ; /* delay >10ms for USB reset */
+    }
+    USBDDR = 0;
+    USBOUT = (1 << USB_CFG_DMINUS_BIT); /* seems to be necessary to allow enumeration to be read by USB Hubs */
 
     /* jump to application if jumper is set */
     if (!BOOTLOADER_CONDITION) {
@@ -135,6 +146,7 @@ int main(void)
     GICR = (1 << IVSEL); /* move interrupts to boot flash section */
 
     usbInit();
+    USBOUT &= ~(1 << USB_CFG_DMINUS_BIT); /* reset PORTD to default state */
     sei();
     for(;;){    /* main event loop */
         usbPoll();

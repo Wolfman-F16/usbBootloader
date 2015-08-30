@@ -10,7 +10,10 @@
 # License: Proprietary, free under certain conditions. See Documentation.
 # This Revision: $Id: Makefile 147 2006-03-01 17:33:03Z cs $
 
-BOOTLOADER_ADDRESS = 1800
+# hfuse=0xd8 #bootloader active
+# hfuse=0xd9 #bootloader inactive
+
+BOOTLOADER_ADDRESS = 0x1800 # = (0x0c00 << 1)
 speed = 16000000
 
 LDFLAGS += -Wl,--section-start=.text=$(BOOTLOADER_ADDRESS)
@@ -79,7 +82,7 @@ clean:
 
 # file targets:
 main.bin:	$(OBJECTS)
-	$(COMPILE) -o ../Release/main.bin $(OBJECTS) $(LDFLAGS)
+	$(COMPILE) -o ../Release/main.bin $(OBJECTS) $(LDFLAGS) -Wl,-Map,../Release/main.map
 
 main.hex:	main.bin
 	rm -f main.hex main.eep.hex
