@@ -4,8 +4,8 @@
  * Creation Date: 2005-01-16
  * Tabsize: 4
  * Copyright: (c) 2005 by OBJECTIVE DEVELOPMENT Software GmbH
- * License: Proprietary, free under certain conditions. See Documentation.
- * This Revision: $Id: oddebug.h 150 2006-03-02 15:09:01Z cs $
+ * License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary (CommercialLicense.txt)
+ * This Revision: $Id: oddebug.h 692 2008-11-07 15:07:40Z cs $
  */
 
 #ifndef __oddebug_h_included__
@@ -25,8 +25,12 @@ the output and a memory block to dump in hex ('data' and 'len').
 
 
 #ifndef F_CPU
-#   define  F_CPU   12000000    /* 12 MHz */
+#error geth
+#   define  F_CPU   ohno    /* 12 MHz */
 #endif
+
+/* make sure we have the UART defines: */
+#include "usbportability.h"
 
 #ifndef uchar
 #   define  uchar   unsigned char
@@ -38,6 +42,7 @@ the output and a memory block to dump in hex ('data' and 'len').
 #endif
 
 #ifndef DEBUG_LEVEL
+// no tx pin available, so NEVER activate debugging
 #   define  DEBUG_LEVEL 0
 #endif
 
