@@ -24,7 +24,7 @@ must be adapted to your hardware.
  * "PORTB", the registers PORTB, PINB (=PORTB-2) and DDRB (=PORTB-1) will be
  * used.
  */
-#define USB_CFG_DMINUS_BIT      0
+#define USB_CFG_DMINUS_BIT      1
 /* This is the bit number in USB_CFG_IOPORT where the USB D- line is connected.
  * This MUST be bit 0. All other values will result in a compile error!
  */

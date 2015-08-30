@@ -69,15 +69,15 @@ of CPU cycles, but even an exact number of cycles!
 #   define nop2     rjmp    .+0 /* jump to next instruction */
 
     .text
-    .global USB_INTR_VECTOR
-    .type   USB_INTR_VECTOR, @function
+    .global SIG_INTERRUPT0
+    .type   SIG_INTERRUPT0, @function
     .global usbCrc16
     .global usbCrc16Append
 
 #endif /* __IAR_SYSTEMS_ASM__ */
 
 
-USB_INTR_VECTOR:
+SIG_INTERRUPT0:
 ;Software-receiver engine. Strict timing! Don't change unless you can preserve timing!
 ;interrupt response time: 4 cycles + insn running = 7 max if interrupts always enabled
 ;max allowable interrupt latency: 32 cycles -> max 25 cycles interrupt disable
