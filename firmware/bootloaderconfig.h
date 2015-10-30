@@ -27,17 +27,17 @@
 #include "usbconfig.h"
 
 #define BOOTLOADER_INIT \
-    PORTB = 0;          \
-    DDRB  = 0;          \
-    PORTC = 0;          \
-    DDRC  = 0x3F;       \
-    PORTD = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD7); \
-    DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD7);
+    PORTB = 0x00;  /* set status led on */                                  \
+    DDRB  = 0x02;                                                           \
+    PORTC = 0x01;  /* PC0 has CC trigger pulled low if connected */         \
+    DDRC  = 0x00;                                                           \
+    PORTD = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);  \
+    DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);
 
 /*
  * on deprecated SimUsbKey hardware, this is the middle pin on the outer SPI
  * connector row
  */
-#define BOOTLOADER_CONDITION ((PINB & (1 << PB3)) == 0)
+#define BOOTLOADER_CONDITION ((PINC & (1 << PC0)) == 1)
 
 #endif /* __bootloader_h_included__ */

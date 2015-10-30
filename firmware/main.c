@@ -139,7 +139,7 @@ int main(void)
 
     /* jump to application if jumper is set */
     if (!BOOTLOADER_CONDITION) {
-      PORTC = (1 << PC0);
+      PORTB = (1 << PB1); /* switch LED off */
       leaveBootloader();
     }
 
@@ -149,7 +149,6 @@ int main(void)
     usbInit();
     USBOUT &= ~(1 << USB_CFG_DMINUS_BIT); /* reset PORTD to default state */
     sei();
-    PORTC = (1 << PC1);
     for(;;){    /* main event loop */
         usbPoll();
     }
