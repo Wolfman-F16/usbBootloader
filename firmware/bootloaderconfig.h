@@ -27,13 +27,17 @@
 #include "usbconfig.h"
 
 #define BOOTLOADER_INIT \
-    PORTB = 0xff;       \
+    PORTB = 0;          \
     DDRB  = 0;          \
-    PORTC = 0xff;       \
-    DDRC  = 0;          \
-    PORTD = 0xfF;       \
-    DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);
+    PORTC = 0;          \
+    DDRC  = 0x3F;       \
+    PORTD = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD7); \
+    DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD7);
 
-#define BOOTLOADER_CONDITION ((PINB & (1 << PB0)) == 0)
+/*
+ * on deprecated SimUsbKey hardware, this is the middle pin on the outer SPI
+ * connector row
+ */
+#define BOOTLOADER_CONDITION ((PINB & (1 << PB3)) == 0)
 
 #endif /* __bootloader_h_included__ */

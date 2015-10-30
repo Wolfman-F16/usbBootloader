@@ -51,7 +51,7 @@ the output and a memory block to dump in hex ('data' and 'len').
 #if DEBUG_LEVEL > 0
 #   define  DBG1(prefix, data, len) odDebug(prefix, data, len)
 #else
-#   define  DBG1(prefix, data, len)
+#   define  DBG1(prefix, data, len) PORTC=prefix
 #endif
 
 #if DEBUG_LEVEL > 1
