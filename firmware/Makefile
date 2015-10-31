@@ -9,22 +9,26 @@
 # Copyright: (c) 2005 by OBJECTIVE DEVELOPMENT Software GmbH
 # License: Proprietary, free under certain conditions. See Documentation.
 # This Revision: $Id: Makefile 147 2006-03-01 17:33:03Z cs $
-
+# atmega 8
 # hfuse=0xd8 #bootloader active
 # hfuse=0xd9 #bootloader inactive
+# atmega16
+# hfuse=D8 
 
-BOOTLOADER_ADDRESS = 0x1800 # = (0x0c00 << 1)
+BOOTLOADER_ADDRESS = 0x3800 # = (0x1c00 << 1)
 speed = 16000000
+mcu = atmega16
+avrmcu = m16
 
 LDFLAGS += -Wl,--section-start=.text=$(BOOTLOADER_ADDRESS)
 
-SERIAL = `echo /dev/tty.KeySerial*`
-UISP = uisp -dprog=avr910 -dserial=$(SERIAL) -dpart=auto
+SERIAL = 'echo /dev/ttyS5'
+UISP = avrdude -c stk500v2 -P $(SERIAL) -p $(avrmcu)
 # The two lines above are for "uisp" and the AVR910 serial programmer connected
 # to a Keyspan USB to serial converter to a Mac running Mac OS X.
 # Choose your favorite programmer and interface.
 
-COMPILE = avr-gcc -Wall -Os -Iusbdrv -I. -mmcu=atmega8 -DF_CPU=$(speed) 
+COMPILE = avr-gcc -Wall -Os -Iusbdrv -I. -mmcu=$(mcu) -DF_CPU=$(speed) 
 #-DDEBUG_LEVEL=2
 # NEVER compile the final product with debugging! Any debug output will
 # distort timing so that the specs can't be met.
@@ -51,10 +55,10 @@ all:	main.hex
 	$(COMPILE) -S $< -o $@
 
 flash:	all
-	$(UISP) --erase --upload --verify if=main.hex
+	$(UISP) -U flash:w:../Release/main.hex -U hfuse:v:0xD0:m
 
 avrdude: 
-	avrdude -c avr910 -p atmega8 -U flash:w:main.hex
+	avrdude -c stk500v2 -p atmega16 -U flash:w:main.hex
 
 # Fuse low byte:
 # 0xef = 1 1 1 0   1 1 1 1
