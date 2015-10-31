@@ -30,11 +30,11 @@ section at the end of this file).
 /* This is the port where the USB bus is connected. When you configure it to
  * "B", the registers PORTB, PINB and DDRB will be used.
  */
-#define USB_CFG_DMINUS_BIT      1
+#define USB_CFG_DMINUS_BIT      4
 /* This is the bit number in USB_CFG_IOPORT where the USB D- line is connected.
  * This may be any bit in the port.
  */
-#define USB_CFG_DPLUS_BIT       2
+#define USB_CFG_DPLUS_BIT       3
 /* This is the bit number in USB_CFG_IOPORT where the USB D+ line is connected.
  * This may be any bit in the port. Please note that D+ must also be connected
  * to interrupt pin INT0! [You can also use other interrupts, see section
@@ -119,7 +119,7 @@ section at the end of this file).
 /* Define this to 1 if the device has its own power supply. Set it to 0 if the
  * device is powered from the USB bus.
  */
-#define USB_CFG_MAX_BUS_POWER           20
+#define USB_CFG_MAX_BUS_POWER           80
 /* Set this variable to the maximum USB bus power consumption of your device.
  * The value is in milliamperes. [It will be divided by two since USB
  * communicates power requirements in units of 2 mA.]
@@ -361,12 +361,12 @@ section at the end of this file).
  * interrupt than INT0, you may have to define some of these.
  */
 /* #define USB_INTR_CFG            MCUCR */
-/* #define USB_INTR_CFG_SET        ((1 << ISC00) | (1 << ISC01)) */
+#define USB_INTR_CFG_SET        ((1 << ISC10) | (1 << ISC11))
 /* #define USB_INTR_CFG_CLR        0 */
 /* #define USB_INTR_ENABLE         GIMSK */
-/* #define USB_INTR_ENABLE_BIT     INT0 */
+#define USB_INTR_ENABLE_BIT     INT1
 /* #define USB_INTR_PENDING        GIFR */
-/* #define USB_INTR_PENDING_BIT    INTF0 */
-/* #define USB_INTR_VECTOR         INT0_vect */
+#define USB_INTR_PENDING_BIT    INTF1
+#define USB_INTR_VECTOR         INT1_vect
 
 #endif /* __usbconfig_h_included__ */

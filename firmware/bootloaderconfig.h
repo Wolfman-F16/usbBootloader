@@ -26,18 +26,24 @@
 
 #include "usbconfig.h"
 
+/*
+ * set common wire 13 to low: ADF select activates bootloader.
+ * PD7 is status LED.
+ */
 #define BOOTLOADER_INIT \
-    PORTB = 0x00;  /* set status led on */                                  \
-    DDRB  = 0x02;                                                           \
-    PORTC = 0x10;  /* PC4 is pulled low if connected with PC5 */            \
-    DDRC  = 0x20;  /* PC5 is output */                                      \
-    PORTD = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);  \
-    DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);
+    PORTA = 0x00;  /* enable multiplexer */                                 \
+    DDRA  = 0x80;                                                           \
+    PORTB = 0x0D;  /* set multiplexer for channel 13 */                     \
+    DDRB  = 0x0F;                                                           \
+    PORTC = 0x01;  /* PC0 is pulled low if ADF selected */                  \
+    DDRC  = 0x00;                                                           \
+    PORTD = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 0 << PD7);  \
+    DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD7);
 
 /*
  * on deprecated SimUsbKey hardware, this is the middle pin on the outer SPI
  * connector row
  */
-#define BOOTLOADER_CONDITION ((PINC & (1 << PC4)) == 0)
+#define BOOTLOADER_CONDITION ((PINC & (1 << PC0)) == 0)
 
 #endif /* __bootloader_h_included__ */
