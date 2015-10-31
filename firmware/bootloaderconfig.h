@@ -29,8 +29,8 @@
 #define BOOTLOADER_INIT \
     PORTB = 0x00;  /* set status led on */                                  \
     DDRB  = 0x02;                                                           \
-    PORTC = 0x01;  /* PC0 has CC trigger pulled low if connected */         \
-    DDRC  = 0x00;                                                           \
+    PORTC = 0x10;  /* PC4 is pulled low if connected with PC5 */            \
+    DDRC  = 0x20;  /* PC5 is output */                                      \
     PORTD = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);  \
     DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD0);
 
@@ -38,6 +38,6 @@
  * on deprecated SimUsbKey hardware, this is the middle pin on the outer SPI
  * connector row
  */
-#define BOOTLOADER_CONDITION ((PINC & (1 << PC0)) == 1)
+#define BOOTLOADER_CONDITION ((PINC & (1 << PC4)) == 0)
 
 #endif /* __bootloader_h_included__ */

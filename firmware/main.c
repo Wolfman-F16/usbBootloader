@@ -139,7 +139,7 @@ int main(void)
 
     /* jump to application if jumper is set */
     if (!BOOTLOADER_CONDITION) {
-      PORTB = (1 << PB1); /* switch LED off */
+      PORTB |= (1 << PB1); /* switch LED off */
       leaveBootloader();
     }
 
