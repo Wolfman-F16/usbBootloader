@@ -121,6 +121,9 @@ uchar usbFunctionWrite(uchar *data, uchar len)
   return 0;
 }
 
+/*
+ * modified to work with UHF Control Board RP hardware and firmware
+ */
 int main(void)
 {
     uint8_t i=0;

@@ -41,8 +41,7 @@
     DDRD  = (1 << USB_CFG_DMINUS_BIT | 1 << USB_CFG_DPLUS_BIT | 1 << PD7);
 
 /*
- * on deprecated SimUsbKey hardware, this is the middle pin on the outer SPI
- * connector row
+ * check for Function Selector set to ADF
  */
 #define BOOTLOADER_CONDITION ((PINC & (1 << PC0)) == 0)
 
