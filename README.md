@@ -9,6 +9,7 @@ The usbBootloader simplifies updates of the *UHF-Radio Control Board RP* firmwar
 ## Installation
 
 Installation is a single step process, covering two key points
+
 0. loading firmware into bootloader section of ATmega16 microcontroller
 0. setting ATmega16 fuse bits to activate booting to bootloader first 
 
