@@ -14,7 +14,7 @@ Installation is a single step process, covering two key points
 0. setting ATmega16 fuse bits to activate booting to bootloader first 
 
 ```
-avrdude -c usbtiny -p m16 -U flash:w:main.hex -U hfuse:v:0xD8:m
+avrdude -c usbtiny -p m16 -U flash:w:main.hex -U hfuse:v:0xD8:m -U lfuse:v:0xCE:m
 ```
 
 ## Usage
